@@ -20,28 +20,35 @@ class ArticleDetailPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(article.urlToImage),
+            Hero(
+                tag: article.urlToImage,
+                child: Image.network(article.urlToImage)),
             Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(article.description),
-                  const Divider(color: Colors.grey,),
+                  const Divider(
+                    color: Colors.grey,
+                  ),
                   Text(
                     article.title,
                     style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24
-                    ),
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24),
                   ),
-                  const Divider(color: Colors.grey,),
+                  const Divider(
+                    color: Colors.grey,
+                  ),
                   Text(
                     article.content,
                     style: const TextStyle(fontSize: 16),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(context, ArticleWebView.routeName,
@@ -77,4 +84,3 @@ class ArticleWebView extends StatelessWidget {
     );
   }
 }
-
