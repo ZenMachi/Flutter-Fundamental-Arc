@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/article.dart';
-import 'package:news_app/detail_page.dart';
+import 'package:news_app/data/model/article.dart';
+import 'package:news_app/ui/article_detail_page.dart';
 import 'package:news_app/styles.dart';
-import 'list_page.dart';
+import 'package:news_app/ui/article_web_view.dart';
+import 'package:news_app/ui/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
                 textStyle: const TextStyle(),
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(0))))),
-        appBarTheme: AppBarTheme(elevation: 0),
+        appBarTheme: const AppBarTheme(elevation: 0),
         textTheme: myTextTheme,
         useMaterial3: true,
         visualDensity: VisualDensity.adaptivePlatformDensity,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/custom_scaffold.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:news_app/ui/article_web_view.dart';
 
-import 'article.dart';
+
+import '../data/model/article.dart';
 
 class ArticleDetailPage extends StatelessWidget {
   static const routeName = '/article_detail';
@@ -65,22 +65,4 @@ class ArticleDetailPage extends StatelessWidget {
   }
 }
 
-class ArticleWebView extends StatelessWidget {
-  static const routeName = '/article_web';
 
-  final String url;
-
-  const ArticleWebView({super.key, required this.url});
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse(url));
-    return CustomScaffold(
-      body: WebViewWidget(
-        controller: controller,
-      ),
-    );
-  }
-}
