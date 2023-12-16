@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CardMenu extends StatelessWidget {
   final String menuName;
 
-  CardMenu({super.key, required this.menuName});
+  const CardMenu({super.key, required this.menuName});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CardMenu extends StatelessWidget {
                   Icon(
                     Icons.fastfood,
                     size: 56,
-                    color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 ],
               ),

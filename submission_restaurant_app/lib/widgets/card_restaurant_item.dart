@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:submission_restaurant_app/restaurant_detail.dart';
+import 'package:submission_restaurant_app/ui/restaurant_detail.dart';
 
 import '../data/model/restaurants.dart';
 
