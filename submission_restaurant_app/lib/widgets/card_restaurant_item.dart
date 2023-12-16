@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:submission_restaurant_app/restaurant_detail.dart';
 
 import '../data/model/restaurants.dart';
@@ -15,7 +17,8 @@ class CardRestaurantItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, RestaurantDetailPage.routeName, arguments: restaurant);
+            Navigator.pushNamed(context, RestaurantDetailPage.routeName,
+                arguments: restaurant);
           },
           child: Card(
               color: Theme.of(context).colorScheme.secondaryContainer,
@@ -26,27 +29,31 @@ class CardRestaurantItem extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        restaurant.pictureId,
-                        width: 128,
-                        height: 92,
-                        fit: BoxFit.fitHeight,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return Padding(
-                            padding: const EdgeInsets.all(24.0),
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes != null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                    : null,
+                      child: Hero(
+                        tag: restaurant.pictureId,
+                        child: Image.network(
+                          restaurant.pictureId,
+                          width: 128,
+                          height: 92,
+                          fit: BoxFit.fitHeight,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            }
+                            return Padding(
+                              padding: const EdgeInsets.all(24.0),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -65,12 +72,15 @@ class CardRestaurantItem extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Icon(
-                            Icons.pin_drop_outlined,
-                            size: 16,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSecondaryContainer,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 2.0,
+                              right: 4.0,
+                            ),
+                            child: SvgPicture.asset(
+                              'images/icons/icon_location.svg',
+                              width: 12,
+                            ),
                           ),
                           Text(
                             restaurant.city,
@@ -82,13 +92,23 @@ class CardRestaurantItem extends StatelessWidget {
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 12),
-                        child: Icon(
-                          Icons.star,
-                          color: Theme.of(context).colorScheme.tertiary,
-                          size: 18,
-                        ),
-                      )
+                          padding: const EdgeInsets.only(top: 12),
+                          child: RatingBarIndicator(
+                            rating: restaurant.rating,
+                            itemSize: 18,
+                            itemBuilder: (context, index) {
+                              return Icon(
+                                Icons.star,
+                                color: Theme.of(context).colorScheme.tertiary,
+                              );
+                            },
+                          )
+                          // Icon(
+                          //   Icons.star,
+                          //   color: Theme.of(context).colorScheme.tertiary,
+                          //   size: 18,
+                          // ),
+                          )
                     ],
                   )
                 ],

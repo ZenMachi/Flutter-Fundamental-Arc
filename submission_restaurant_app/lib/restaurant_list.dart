@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:sizer/sizer.dart';
 import 'package:submission_restaurant_app/data/service/json_service.dart';
 import 'package:submission_restaurant_app/widgets/card_restaurant_item.dart';
@@ -47,6 +48,8 @@ class _RestaurantListState extends State<RestaurantList> {
     //   // _displayRestaurant.addAll(restaurant.restaurants);
     //   print(_foundRestaurant);
     // });
+
+    FlutterNativeSplash.remove();
 
     super.initState();
   }

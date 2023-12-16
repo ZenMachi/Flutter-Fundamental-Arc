@@ -38,6 +38,8 @@ dependencies:
   google_fonts:
   sizer:
   flutter_svg:
+  flutter_rating_bar:
+  flutter_native_splash:
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +67,7 @@ flutter:
   assets:
    - assets/
    - images/icons/
+   - images/splash/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

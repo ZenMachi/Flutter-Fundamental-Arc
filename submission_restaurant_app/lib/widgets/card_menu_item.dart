@@ -10,7 +10,7 @@ class CardMenu extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Card(
-        color: Theme.of(context).colorScheme.tertiaryContainer,
+        color: Theme.of(context).colorScheme.secondaryContainer,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -23,6 +23,7 @@ class CardMenu extends StatelessWidget {
                   Icon(
                     Icons.fastfood,
                     size: 56,
+                    color: Theme.of(context).colorScheme.onSecondaryContainer,
                   ),
                 ],
               ),
