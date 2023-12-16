@@ -54,68 +54,90 @@ class RestaurantDetailPage extends StatelessWidget {
                     SizedBox(height: 24),
                     _buildDescription(context),
                     SizedBox(height: 24),
-                    Text(
-                      'Menu',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ],
-                ),
-              ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        'Foods',
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                      Text(
-                        'Drinks',
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    height: 220,
-                    // padding: EdgeInsets.all(8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 40.w,
-                          child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: restaurant.menus.foods.length,
-                              itemBuilder: (context, index) {
-                                return Center(
-                                    child: CardMenu(
-                                        menuName: restaurant
-                                            .menus.foods[index].name));
-                              }),
+                        Text(
+                          'Menu',
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         SizedBox(
-                          width: 40.w,
-                          child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: restaurant.menus.drinks.length,
-                              itemBuilder: (context, index) {
-                                return Center(
-                                    child: CardMenu(
-                                        menuName: restaurant
-                                            .menus.drinks[index].name));
-                              }),
+                          height: 4,
+                        ),
+                        Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      'Foods',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
+                                    Text(
+                                      'Drinks',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Container(
+                                  height: 220,
+                                  // padding: EdgeInsets.all(8),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 40.w,
+                                        child: ListView.builder(
+                                            scrollDirection: Axis.vertical,
+                                            shrinkWrap: true,
+                                            itemCount:
+                                                restaurant.menus.foods.length,
+                                            itemBuilder: (context, index) {
+                                              return Center(
+                                                  child: CardMenu(
+                                                      menuName: restaurant.menus
+                                                          .foods[index].name));
+                                            }),
+                                      ),
+                                      SizedBox(
+                                        width: 40.w,
+                                        child: ListView.builder(
+                                            scrollDirection: Axis.vertical,
+                                            shrinkWrap: true,
+                                            itemCount:
+                                                restaurant.menus.drinks.length,
+                                            itemBuilder: (context, index) {
+                                              return Center(
+                                                  child: CardMenu(
+                                                      menuName: restaurant.menus
+                                                          .drinks[index].name));
+                                            }),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -135,6 +157,7 @@ class RestaurantDetailPage extends StatelessWidget {
         Text(
           restaurant.description,
           style: Theme.of(context).textTheme.bodyMedium,
+          textAlign: TextAlign.justify,
         ),
       ],
     );

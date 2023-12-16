@@ -64,7 +64,6 @@ class _RestaurantListState extends State<RestaurantList> {
 
   @override
   Widget build(BuildContext context) {
-    _displayRestaurant = List.from(_foundRestaurant);
     final iconSearch =
         searchFocus.hasPrimaryFocus ? Icon(Icons.clear) : Icon(Icons.search);
 
@@ -143,7 +142,8 @@ class _RestaurantListState extends State<RestaurantList> {
                           .name
                           .toLowerCase()
                           .contains(query.toLowerCase())
-                      ? CardRestaurantItem(restaurant: _displayRestaurant[index])
+                      ? CardRestaurantItem(
+                          restaurant: _displayRestaurant[index])
                       : Container();
                   // return CardItem(restaurant: _displayRestaurant[index]);
                 }),
