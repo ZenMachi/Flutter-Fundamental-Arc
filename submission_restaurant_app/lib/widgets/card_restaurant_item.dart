@@ -3,10 +3,10 @@ import 'package:submission_restaurant_app/restaurant_detail.dart';
 
 import '../data/model/restaurants.dart';
 
-class CardItem extends StatelessWidget {
+class CardRestaurantItem extends StatelessWidget {
   final Restaurant restaurant;
 
-  const CardItem({super.key, required this.restaurant});
+  const CardRestaurantItem({super.key, required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
