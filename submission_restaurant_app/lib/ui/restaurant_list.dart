@@ -45,13 +45,13 @@ class _RestaurantListState extends State<RestaurantList> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Restaurant',
-                    style: Theme.of(context).textTheme.displayLarge?.apply(
+                    style: Theme.of(context).textTheme.displayMedium?.apply(
                         color: Theme.of(context).colorScheme.onBackground)),
                 SizedBox(height: 8.h),
                 _buildSearchBar(iconSearch),
                 SizedBox(height: 4.h),
                 Text('Nearest Restaurant for You!',
-                    style: Theme.of(context).textTheme.titleLarge?.apply(
+                    style: Theme.of(context).textTheme.titleMedium?.apply(
                         color: Theme.of(context).colorScheme.onBackground)),
                 _buildRestaurantItem(searchString),
               ],

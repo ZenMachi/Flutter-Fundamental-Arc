@@ -186,8 +186,7 @@ class RestaurantDetailPage extends StatelessWidget {
             ),
             Text(
               restaurant.city,
-              style: Theme.of(context).textTheme.bodyLarge?.apply(
-                  color: Theme.of(context).colorScheme.onSecondaryContainer),
+              style: Theme.of(context).textTheme.bodyLarge,
             )
           ],
         ),

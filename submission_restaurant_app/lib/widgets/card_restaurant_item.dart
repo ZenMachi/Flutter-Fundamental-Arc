@@ -21,7 +21,7 @@ class CardRestaurantItem extends StatelessWidget {
                 arguments: restaurant);
           },
           child: Card(
-              color: Theme.of(context).colorScheme.secondaryContainer,
+              color: Theme.of(context).colorScheme.surfaceVariant,
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -67,7 +67,7 @@ class CardRestaurantItem extends StatelessWidget {
                           style: Theme.of(context).textTheme.titleMedium?.apply(
                               color: Theme.of(context)
                                   .colorScheme
-                                  .onSecondaryContainer),
+                                  .onSurfaceVariant),
                         ),
                       ),
                       Row(
@@ -84,10 +84,10 @@ class CardRestaurantItem extends StatelessWidget {
                           ),
                           Text(
                             restaurant.city,
-                            style: Theme.of(context).textTheme.bodySmall?.apply(
+                            style: Theme.of(context).textTheme.bodyMedium?.apply(
                                 color: Theme.of(context)
                                     .colorScheme
-                                    .onSecondaryContainer),
+                                    .onSurfaceVariant),
                           )
                         ],
                       ),
@@ -99,7 +99,7 @@ class CardRestaurantItem extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return Icon(
                                 Icons.star,
-                                color: Theme.of(context).colorScheme.tertiary,
+                                color: Theme.of(context).colorScheme.surfaceTint,
                               );
                             },
                           )

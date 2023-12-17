@@ -25,6 +25,11 @@ class MyApp extends StatelessWidget {
         colorScheme: lightColorScheme,
         useMaterial3: true,
       ),
+      darkTheme: ThemeData(
+        textTheme: myTextTheme,
+        colorScheme: darkColorScheme,
+        useMaterial3: true
+      ),
       debugShowCheckedModeBanner: false,
       initialRoute: RestaurantList.routeName,
       routes: {
