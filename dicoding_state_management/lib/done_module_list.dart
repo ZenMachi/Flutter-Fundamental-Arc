@@ -1,4 +1,6 @@
+import 'package:dicoding_state_management/done_module_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DoneModuleList extends StatelessWidget {
   final List<String> doneModuleList;
@@ -8,6 +10,9 @@ class DoneModuleList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final doneModuleList =
+        Provider.of<DoneModuleProvider>(context, listen: false).doneModuleList;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Done Module List'),

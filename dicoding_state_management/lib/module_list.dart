@@ -1,4 +1,6 @@
+import 'package:dicoding_state_management/done_module_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ModuleList extends StatefulWidget {
   final List<String> doneModuleList;
@@ -28,13 +30,17 @@ class _ModuleListState extends State<ModuleList> {
     return ListView.builder(
       itemCount: _moduleList.length,
       itemBuilder: (context, index) {
-        return ModuleTile(
-          moduleName: _moduleList[index],
-          isDone: widget.doneModuleList.contains(_moduleList[index]),
-          onClick: () {
-            setState(() {
-              widget.doneModuleList.add(_moduleList[index]);
-            });
+        return Consumer<DoneModuleProvider>(
+          builder: (context, DoneModuleProvider data, widget) {
+            return ModuleTile(
+              moduleName: _moduleList[index],
+              isDone: data.doneModuleList.contains(_moduleList[index]),
+              onClick: () {
+                setState(() {
+                  data.complete(_moduleList[index]);
+                });
+              },
+            );
           },
         );
       },
