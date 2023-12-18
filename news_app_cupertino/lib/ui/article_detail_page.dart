@@ -21,14 +21,14 @@ class ArticleDetailPage extends StatelessWidget {
         child: Column(
           children: [
             Hero(
-                tag: article.urlToImage,
-                child: Image.network(article.urlToImage)),
+                tag: article.urlToImage!,
+                child: Image.network(article.urlToImage!)),
             Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(article.description),
+                  Text(article.description ?? ""),
                   const Divider(
                     color: Colors.grey,
                   ),
@@ -43,12 +43,22 @@ class ArticleDetailPage extends StatelessWidget {
                     color: Colors.grey,
                   ),
                   Text(
-                    article.content,
-                    style: const TextStyle(fontSize: 16),
+                    'Date: ${article.publishedAt}',
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
+                  Text(
+                    'Author: ${article.author}',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const Divider(color: Colors.grey,),
+                  Text(
+                    article.content ?? "",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const SizedBox(height: 10),
                   ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(context, ArticleWebView.routeName,

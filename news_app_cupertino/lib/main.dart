@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/data/model/article.dart';
 import 'package:news_app/ui/article_detail_page.dart';
-import 'package:news_app/styles.dart';
+import 'package:news_app/common/styles.dart';
 import 'package:news_app/ui/article_web_view.dart';
 import 'package:news_app/ui/home_page.dart';
 
