@@ -1,26 +1,49 @@
 import 'package:news_app/data/api/api_service.dart';
 import 'package:news_app/data/model/article.dart';
+import 'package:news_app/provider/news_provider.dart';
 import 'package:news_app/ui/article_detail_page.dart';
 import 'package:news_app/widgets/card_article.dart';
 import 'package:news_app/widgets/platform_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ArticleListPage extends StatefulWidget {
+class ArticleListPage extends StatelessWidget {
   const ArticleListPage({super.key});
 
-  @override
-  State<ArticleListPage> createState() => _ArticleListPageState();
-}
-
-class _ArticleListPageState extends State<ArticleListPage> {
-  late Future<ArticlesResult> _article;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _article = ApiService().topHeadlines();
+  Widget _buildList(BuildContext context) {
+    return Consumer<NewsProvider>(
+      builder: (context, state, _) {
+        if (state.state == ResultState.loading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state.state == ResultState.hasData) {
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: state.result.articles.length,
+            itemBuilder: (context, index) {
+              var article = state.result.articles[index];
+              return CardArticle(article: article);
+            },
+          );
+        } else if (state.state == ResultState.noData) {
+          return Center(
+            child: Material(
+              child: Text(state.message),
+            ),
+          );
+        } else if (state.state == ResultState.error) {
+          return Center(
+            child: Material(
+              child: Text(state.message),
+            ),
+          );
+        } else {
+          return const Center(child: Material(child: Text('')));
+        }
+      },
+    );
   }
 
   Widget _buildAndroid(BuildContext context) {
@@ -42,39 +65,7 @@ class _ArticleListPageState extends State<ArticleListPage> {
     );
   }
 
-  Widget _buildList(BuildContext context) {
-    return FutureBuilder<ArticlesResult>(
-      future: _article,
-      builder: (context, snapshot) {
-        var state = snapshot.connectionState;
 
-        if (state != ConnectionState.done) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: snapshot.data?.articles.length,
-              itemBuilder: (context, index) {
-                var article = snapshot.data?.articles[index];
-                return CardArticle(article: article!);
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Material(
-                child: Text(snapshot.error.toString()),
-              ),
-            );
-          } else {
-            return const Material(child: Text(''));
-          }
-        }
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

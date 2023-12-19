@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/data/api/api_service.dart';
+import 'package:news_app/provider/news_provider.dart';
 import 'package:news_app/ui/article_list_page.dart';
 import 'package:news_app/widgets/platform_widget.dart';
 import 'package:news_app/ui/settings_page.dart';
 import 'package:news_app/common/styles.dart';
+import 'package:provider/provider.dart';
 
 class NewsListPage extends StatefulWidget {
   static const routeName = '/home_page';
@@ -26,8 +29,7 @@ class _NewsListPageState extends State<NewsListPage> {
 
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
-      body:
-          _listWidget[_bottomNavIndex],
+      body: _listWidget[_bottomNavIndex],
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: secondaryColor,
         currentIndex: _bottomNavIndex,
@@ -44,9 +46,7 @@ class _NewsListPageState extends State<NewsListPage> {
   Widget _buildIos(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-        activeColor: secondaryColor,
-        items: _bottomNavBarItems
-      ),
+          activeColor: secondaryColor, items: _bottomNavBarItems),
       tabBuilder: (context, index) {
         return _listWidget[index];
       },
@@ -63,7 +63,10 @@ class _NewsListPageState extends State<NewsListPage> {
   ];
 
   final List<Widget> _listWidget = [
-    const ArticleListPage(),
+    ChangeNotifierProvider<NewsProvider>(
+      create: (_) => NewsProvider(apiService: ApiService()),
+      child: const ArticleListPage(),
+    ),
     const SettingsPage()
   ];
 }
