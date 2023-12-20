@@ -1,47 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:submission_restaurant_app/data/model/restaurant_detail.dart';
+import 'package:submission_restaurant_app/provider/restaurant_provider.dart';
 import 'package:submission_restaurant_app/widgets/card_menu_item.dart';
-
-import '../data/model/restaurants.dart';
 
 class RestaurantDetailPage extends StatelessWidget {
   static const routeName = '/restaurant_detail';
 
-  final Restaurant restaurant;
+  final String id;
 
-  const RestaurantDetailPage({super.key, required this.restaurant});
+  const RestaurantDetailPage({
+    super.key, required this.id,
+  });
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildImage(context),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 24),
-                    _buildNameAndLocation(context),
-                    const SizedBox(height: 24),
-                    _buildDescription(context),
-                    const SizedBox(height: 24),
-                    _buildMenu(context),
-                  ],
+        child: SingleChildScrollView(child: Consumer<RestaurantProvider>(
+          builder: (context, state, child) {
+            if (state.state == ResultState.loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state.state == ResultState.hasData) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildImage(context, state.restaurantDetailResult),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 24),
+                        _buildNameAndLocation(
+                            context, state.restaurantDetailResult),
+                        const SizedBox(height: 24),
+                        _buildDescription(
+                            context, state.restaurantDetailResult),
+                        const SizedBox(height: 24),
+                        _buildMenu(context, state.restaurantDetailResult),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            } else if (state.state == ResultState.noData) {
+              return Center(
+                child: Material(
+                  child: Text(state.message),
                 ),
-              ),
-            ],
-          ),
-        ),
+              );
+            } else if (state.state == ResultState.error) {
+              return Center(
+                child: Material(
+                  child: Text(state.message),
+                ),
+              );
+            } else {
+              return const Center(
+                child: Text('Unknown Error'),
+              );
+            }
+          },
+        )),
       ),
     );
   }
 
-  Column _buildMenu(BuildContext context) {
+  Column _buildMenu(BuildContext context, RestaurantDetail detail) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -86,12 +116,12 @@ class RestaurantDetailPage extends StatelessWidget {
                           child: ListView.builder(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
-                              itemCount: restaurant.menus.foods.length,
+                              itemCount: detail.restaurant.menus.foods.length,
                               itemBuilder: (context, index) {
                                 return Center(
                                     child: CardMenu(
-                                        menuName: restaurant
-                                            .menus.foods[index].name));
+                                        menuName: detail.restaurant.menus
+                                            .foods[index].name));
                               }),
                         ),
                         SizedBox(
@@ -99,12 +129,12 @@ class RestaurantDetailPage extends StatelessWidget {
                           child: ListView.builder(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
-                              itemCount: restaurant.menus.drinks.length,
+                              itemCount: detail.restaurant.menus.drinks.length,
                               itemBuilder: (context, index) {
                                 return Center(
                                     child: CardMenu(
-                                        menuName: restaurant
-                                            .menus.drinks[index].name));
+                                        menuName: detail.restaurant.menus
+                                            .drinks[index].name));
                               }),
                         ),
                       ],
@@ -119,14 +149,14 @@ class RestaurantDetailPage extends StatelessWidget {
     );
   }
 
-  ClipRRect _buildImage(BuildContext context) {
+  ClipRRect _buildImage(BuildContext context, RestaurantDetail detail) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
       child: Hero(
-        tag: restaurant.pictureId,
+        tag: detail.restaurant.pictureId,
         child: Image.network(
-          restaurant.pictureId,
+          "https://restaurant-api.dicoding.dev/images/medium/${detail.restaurant.pictureId}",
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.fitHeight,
           loadingBuilder: (context, child, loadingProgress) {
@@ -147,7 +177,7 @@ class RestaurantDetailPage extends StatelessWidget {
     );
   }
 
-  Column _buildDescription(BuildContext context) {
+  Column _buildDescription(BuildContext context, RestaurantDetail detail) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -156,7 +186,7 @@ class RestaurantDetailPage extends StatelessWidget {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         Text(
-          restaurant.description,
+          detail.restaurant.description,
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.justify,
         ),
@@ -164,12 +194,12 @@ class RestaurantDetailPage extends StatelessWidget {
     );
   }
 
-  Column _buildNameAndLocation(BuildContext context) {
+  Column _buildNameAndLocation(BuildContext context, RestaurantDetail detail) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          restaurant.name,
+          detail.restaurant.name,
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         Row(
@@ -185,7 +215,7 @@ class RestaurantDetailPage extends StatelessWidget {
               ),
             ),
             Text(
-              restaurant.city,
+              detail.restaurant.city,
               style: Theme.of(context).textTheme.bodyLarge,
             )
           ],

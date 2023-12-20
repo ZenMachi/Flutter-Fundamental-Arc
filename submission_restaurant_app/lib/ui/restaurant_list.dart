@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:submission_restaurant_app/provider/restaurant_provider.dart';
 import 'package:submission_restaurant_app/widgets/card_restaurant_item.dart';
-
-import '../data/model/restaurants.dart';
 
 class RestaurantList extends StatefulWidget {
   static const routeName = '/';
@@ -16,17 +16,11 @@ class RestaurantList extends StatefulWidget {
 
 class _RestaurantListState extends State<RestaurantList> {
   final SearchController _searchController = SearchController();
-  List<Restaurant> _displayRestaurant = [];
   FocusNode searchFocus = FocusNode();
   String searchString = '';
 
-  late Future dataJson;
-
   @override
   void initState() {
-    dataJson = DefaultAssetBundle.of(context)
-        .loadString("assets/local_restaurant.json");
-
     FlutterNativeSplash.remove();
     super.initState();
   }
@@ -36,6 +30,7 @@ class _RestaurantListState extends State<RestaurantList> {
     final iconSearch = searchFocus.hasPrimaryFocus
         ? const Icon(Icons.clear)
         : const Icon(Icons.search);
+
 
     return Scaffold(
       body: SafeArea(
@@ -53,7 +48,7 @@ class _RestaurantListState extends State<RestaurantList> {
                 Text('Nearest Restaurant for You!',
                     style: Theme.of(context).textTheme.titleMedium?.apply(
                         color: Theme.of(context).colorScheme.onBackground)),
-                _buildRestaurantItem(searchString),
+                _buildRestaurantItem(),
               ],
             )),
       ),
@@ -86,32 +81,41 @@ class _RestaurantListState extends State<RestaurantList> {
     );
   }
 
-  FutureBuilder _buildRestaurantItem(String query) {
-    return FutureBuilder(
-        future: dataJson,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final RestaurantDetail restaurant = parseRestaurant(snapshot.data);
-            _displayRestaurant = List.from(restaurant.restaurants);
-
-            return Flexible(
-              child: ListView.builder(
-                  itemCount: _displayRestaurant.length,
-                  itemBuilder: (context, index) {
-                    return _displayRestaurant[index]
-                            .name
-                            .toLowerCase()
-                            .contains(query.toLowerCase())
-                        ? CardRestaurantItem(
-                            restaurant: _displayRestaurant[index])
-                        : Container();
-                  }),
-            );
-          }
-
+  Widget _buildRestaurantItem() {
+    return Consumer<RestaurantProvider>(
+      builder: (context, state, child) {
+        if (state.state == ResultState.loading) {
           return const Center(
-            child: Text('No Data'),
+            child: CircularProgressIndicator(),
           );
-        });
+        } else if (state.state == ResultState.hasData) {
+          return Flexible(
+            child: ListView.builder(
+                itemCount: state.restaurantListResult.count,
+                itemBuilder: (context, index) {
+                  return CardRestaurantItem(
+                      restaurant:
+                          state.restaurantListResult.restaurants[index]);
+                }),
+          );
+        } else if (state.state == ResultState.noData) {
+          return Center(
+            child: Material(
+              child: Text(state.message),
+            ),
+          );
+        } else if (state.state == ResultState.error) {
+          return Center(
+            child: Material(
+              child: Text(state.message),
+            ),
+          );
+        } else {
+          return const Center(
+            child: Text('Unknown Error'),
+          );
+        }
+      },
+    );
   }
 }

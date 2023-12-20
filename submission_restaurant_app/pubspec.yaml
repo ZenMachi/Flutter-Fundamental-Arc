@@ -41,6 +41,9 @@ dependencies:
   flutter_rating_bar:
   flutter_native_splash:
 
+  http:
+  provider:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

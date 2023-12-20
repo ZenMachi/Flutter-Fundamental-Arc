@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:submission_restaurant_app/data/model/restaurants_list.dart';
 import 'package:submission_restaurant_app/ui/restaurant_detail.dart';
-
-import '../data/model/restaurants.dart';
 
 class CardRestaurantItem extends StatelessWidget {
   final Restaurant restaurant;
@@ -18,7 +17,7 @@ class CardRestaurantItem extends StatelessWidget {
         child: InkWell(
           onTap: () {
             Navigator.pushNamed(context, RestaurantDetailPage.routeName,
-                arguments: restaurant);
+                arguments: restaurant.id);
           },
           child: Card(
               color: Theme.of(context).colorScheme.surfaceVariant,
@@ -32,7 +31,7 @@ class CardRestaurantItem extends StatelessWidget {
                       child: Hero(
                         tag: restaurant.pictureId,
                         child: Image.network(
-                          restaurant.pictureId,
+                          "https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}",
                           width: 128,
                           height: 92,
                           fit: BoxFit.fitHeight,
@@ -84,31 +83,28 @@ class CardRestaurantItem extends StatelessWidget {
                           ),
                           Text(
                             restaurant.city,
-                            style: Theme.of(context).textTheme.bodyMedium?.apply(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSurfaceVariant),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.apply(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurfaceVariant),
                           )
                         ],
                       ),
                       Padding(
                           padding: const EdgeInsets.only(top: 12),
                           child: RatingBarIndicator(
-                            rating: restaurant.rating,
-                            itemSize: 18,
-                            itemBuilder: (context, index) {
-                              return Icon(
-                                Icons.star,
-                                color: Theme.of(context).colorScheme.surfaceTint,
-                              );
-                            },
-                          )
-                          // Icon(
-                          //   Icons.star,
-                          //   color: Theme.of(context).colorScheme.tertiary,
-                          //   size: 18,
-                          // ),
-                          )
+                              rating: restaurant.rating,
+                              itemSize: 18,
+                              itemBuilder: (context, index) {
+                                return Icon(
+                                  Icons.star,
+                                  color:
+                                      Theme.of(context).colorScheme.surfaceTint,
+                                );
+                              }))
                     ],
                   )
                 ],
