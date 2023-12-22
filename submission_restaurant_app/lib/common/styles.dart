@@ -23,11 +23,11 @@ final myTextTheme = TextTheme(
   titleSmall: GoogleFonts.inter(
       fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.1),
   // Body
-  bodyLarge: GoogleFonts.libreFranklin(
+  bodyLarge: GoogleFonts.roboto(
       fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.5),
-  bodyMedium: GoogleFonts.libreFranklin(
+  bodyMedium: GoogleFonts.roboto(
       fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-  bodySmall: GoogleFonts.libreFranklin(
+  bodySmall: GoogleFonts.roboto(
       fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
   // Label
   labelLarge: GoogleFonts.roboto(

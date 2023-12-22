@@ -40,6 +40,7 @@ dependencies:
   flutter_svg:
   flutter_rating_bar:
   flutter_native_splash:
+  lottie:
 
   http:
   provider:

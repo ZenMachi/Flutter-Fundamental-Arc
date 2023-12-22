@@ -9,34 +9,36 @@ class CardMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
-      child: Card(
-        color: Theme.of(context).colorScheme.secondaryContainer,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  // SizedBox(width: 24,),
-                  Icon(
-                    Icons.fastfood,
-                    size: 56,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    menuName,
-                    style: Theme.of(context).textTheme.labelMedium,
-                  )
-                ],
-              )
-            ],
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minWidth: 150, minHeight: 100),
+        child: Card(
+          color: Theme.of(context).colorScheme.surfaceVariant,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0, top: 8.0, right: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Icon(
+                      Icons.fastfood,
+                      size: 56,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      menuName,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

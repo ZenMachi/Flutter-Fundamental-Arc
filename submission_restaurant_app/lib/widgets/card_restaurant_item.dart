@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:submission_restaurant_app/data/model/restaurants_list.dart';
-import 'package:submission_restaurant_app/ui/restaurant_detail.dart';
+
+import '../data/model/restaurant.dart';
 
 class CardRestaurantItem extends StatelessWidget {
   final Restaurant restaurant;
+  final Function() onTap;
 
-  const CardRestaurantItem({super.key, required this.restaurant});
+  const CardRestaurantItem(
+      {super.key, required this.restaurant, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +18,9 @@ class CardRestaurantItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: InkWell(
-          onTap: () {
-            Navigator.pushNamed(context, RestaurantDetailPage.routeName,
-                arguments: restaurant.id);
-          },
+          onTap: onTap,
           child: Card(
-              color: Theme.of(context).colorScheme.surfaceVariant,
+              color: Theme.of(context).colorScheme.surface,
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -64,9 +64,7 @@ class CardRestaurantItem extends StatelessWidget {
                         child: Text(
                           restaurant.name,
                           style: Theme.of(context).textTheme.titleMedium?.apply(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant),
+                              color: Theme.of(context).colorScheme.onSurface),
                         ),
                       ),
                       Row(
@@ -79,6 +77,9 @@ class CardRestaurantItem extends StatelessWidget {
                             child: SvgPicture.asset(
                               'images/icons/icon_location.svg',
                               width: 12,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
                             ),
                           ),
                           Text(
@@ -89,7 +90,7 @@ class CardRestaurantItem extends StatelessWidget {
                                 ?.apply(
                                     color: Theme.of(context)
                                         .colorScheme
-                                        .onSurfaceVariant),
+                                        .onSurface),
                           )
                         ],
                       ),
@@ -98,13 +99,11 @@ class CardRestaurantItem extends StatelessWidget {
                           child: RatingBarIndicator(
                               rating: restaurant.rating,
                               itemSize: 18,
-                              itemBuilder: (context, index) {
-                                return Icon(
-                                  Icons.star,
-                                  color:
-                                      Theme.of(context).colorScheme.surfaceTint,
-                                );
-                              }))
+                              itemBuilder: (context, index) => Icon(
+                                    Icons.star,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  )))
                     ],
                   )
                 ],
