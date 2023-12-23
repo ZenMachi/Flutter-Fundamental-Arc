@@ -81,10 +81,10 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                 children: [
                   Lottie.asset('assets/error_cat.json', height: 240),
                   Text(state.message),
-                  SizedBox(height: 24,),
+                  const SizedBox(height: 24,),
                   OutlinedButton(
                       onPressed: () => Provider.of<ApiProvider>(context, listen: false).fetchListRestaurant(),
-                      child: Text('Refresh Data'))
+                      child: const Text('Refresh Data'))
                 ],
               ),
             ),

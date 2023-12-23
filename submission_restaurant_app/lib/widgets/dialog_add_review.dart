@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:submission_restaurant_app/data/model/post_review_body.dart';
-import 'package:submission_restaurant_app/data/model/restaurant_detail.dart';
 import 'package:submission_restaurant_app/provider/api_provider.dart';
 
 class DialogAddReview extends StatefulWidget {
@@ -19,36 +18,36 @@ class DialogAddReview extends StatefulWidget {
 }
 
 class _DialogAddReviewState extends State<DialogAddReview> {
-  final formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final reviewController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _reviewController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
-      title: Text('Add Review'),
+      title: const Text('Add Review'),
       actions: [
         ElevatedButton(
             onPressed: () {
-              if (formKey.currentState!.validate()) {
+              if (_formKey.currentState!.validate()) {
                 _addReview();
               }
             },
-            child: Text('Add'))
+            child: const Text('Add'))
       ],
       content: ConstrainedBox(
           constraints:
-              BoxConstraints(minHeight: 200, minWidth: 300, maxWidth: 300),
+              const BoxConstraints(minHeight: 200, minWidth: 300, maxWidth: 300),
           child: Form(
-              key: formKey,
+              key: _formKey,
               child: Column(
                 children: [
                   TextFormField(
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
-                    controller: nameController,
-                    decoration: InputDecoration(labelText: 'Nama'),
+                    controller: _nameController,
+                    decoration: const InputDecoration(labelText: 'Nama'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please check the name';
@@ -59,8 +58,8 @@ class _DialogAddReviewState extends State<DialogAddReview> {
                   TextFormField(
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
-                    controller: reviewController,
-                    decoration: InputDecoration(labelText: 'Review'),
+                    controller: _reviewController,
+                    decoration: const InputDecoration(labelText: 'Review'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please check the review';
@@ -75,14 +74,15 @@ class _DialogAddReviewState extends State<DialogAddReview> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _nameController.dispose();
+    _reviewController.dispose();
     super.dispose();
   }
 
   Future<void> _addReview() async {
     String id = widget.id;
-    String name = nameController.text.trim();
-    String review = reviewController.text.trim();
+    String name = _nameController.text.trim();
+    String review = _reviewController.text.trim();
     PostReviewBody reviewBody =
         PostReviewBody(id: id, name: name, review: review);
 
@@ -93,12 +93,12 @@ class _DialogAddReviewState extends State<DialogAddReview> {
       _showSnackbar('Processing');
     } else if (provider.state == ResultState.hasData) {
       _showSnackbar('Review Added');
-      Future.delayed(Duration(seconds: 4), () => Navigator.of(context).pop());
+      Future.delayed(const Duration(seconds: 4), () => Navigator.of(context).pop());
     } else if (provider.state == ResultState.noData) {
       _showSnackbar('Review Failed to add');
     } else if (provider.state == ResultState.error) {
       _showSnackbar(provider.message);
-      Future.delayed(Duration(milliseconds: 750), () => Navigator.of(context).pop());
+      Future.delayed(const Duration(milliseconds: 750), () => Navigator.of(context).pop());
     } else {
       _showSnackbar('Unknown Error');
     }

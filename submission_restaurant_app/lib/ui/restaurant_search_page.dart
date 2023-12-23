@@ -100,7 +100,7 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
                   }),
             );
           } else {
-            return Text('No Data');
+            return const Text('No Data');
           }
         } else if (state.state == ResultState.noData) {
           return Center(
@@ -117,14 +117,14 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
                 children: [
                   Lottie.asset('assets/error_cat.json', height: 240),
                   Text(state.message),
-                  SizedBox(
+                  const SizedBox(
                     height: 24,
                   ),
                   OutlinedButton(
                       onPressed: () =>
                           Provider.of<ApiProvider>(context, listen: false)
                               .fetchResultRestaurant(queryString),
-                      child: Text('Refresh Data'))
+                      child: const Text('Refresh Data'))
                 ],
               ),
             ),

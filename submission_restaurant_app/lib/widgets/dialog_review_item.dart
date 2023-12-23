@@ -15,10 +15,10 @@ class DialogReviewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
-      title: Text('Reviews'),
+      title: const Text('Reviews'),
       actions: [
         ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(), child: Text('Close'))
+            onPressed: () => Navigator.of(context).pop(), child: const Text('Close'))
       ],
       content: SizedBox(
         height: 300,
@@ -35,14 +35,14 @@ class DialogReviewItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(detail.restaurant.customerReviews[index].review),
-                        SizedBox(
+                        const SizedBox(
                           height: 12,
                         ),
                         Text(detail.restaurant.customerReviews[index].date),
                       ],
                     ),
                   ),
-                  Divider()
+                  const Divider()
                 ],
               );
             }),

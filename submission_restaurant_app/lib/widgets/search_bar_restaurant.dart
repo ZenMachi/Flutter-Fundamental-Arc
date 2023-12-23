@@ -48,4 +48,10 @@ class _SearchBarRestaurantState extends State<SearchBarRestaurant> {
       ],
     );
   }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 }

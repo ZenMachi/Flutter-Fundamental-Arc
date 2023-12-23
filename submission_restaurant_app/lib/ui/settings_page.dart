@@ -29,7 +29,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Column(
                   children: [
                     ListTile(
-                      title: Text('Dark Theme'),
+                      title: const Text('Dark Theme'),
                       trailing: Switch.adaptive(
                           value: Provider.of<ThemeProvider>(context).isDark,
                           onChanged: (value) =>

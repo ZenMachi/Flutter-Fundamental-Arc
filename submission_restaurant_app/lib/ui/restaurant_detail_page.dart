@@ -34,8 +34,8 @@ class RestaurantDetailPage extends StatelessWidget {
           return Scaffold(
             floatingActionButton: FloatingActionButton.extended(
                 elevation: 0,
-                icon: Icon(Icons.add),
-                label: Text('Add Review'),
+                icon: const Icon(Icons.add),
+                label: const Text('Add Review'),
                 onPressed: () => showDialog(
                     context: context,
                     builder: (context) =>
@@ -75,7 +75,7 @@ class RestaurantDetailPage extends StatelessWidget {
                                           context: context,
                                           detail:
                                               state.restaurantDetailResult)),
-                                  child: Text('Reviews'))
+                                  child: const Text('Reviews'))
                             ],
                           ),
                           const SizedBox(height: 24),
@@ -109,14 +109,14 @@ class RestaurantDetailPage extends StatelessWidget {
                       onPressed: () =>
                           Provider.of<ApiProvider>(context, listen: false)
                               .fetchDetailRestaurant(id),
-                      child: Text('Refresh Data'))
+                      child: const Text('Refresh Data'))
                 ],
               ),
             ),
           );
         } else {
-          return Scaffold(
-            body: const Center(
+          return const Scaffold(
+            body: Center(
               child: Text('Unknown Error'),
             ),
           );
@@ -186,34 +186,6 @@ class RestaurantDetailPage extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  ClipRRect _buildImageDummy(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-      child: Hero(
-        tag: 14,
-        child: Image.network(
-          "https://restaurant-api.dicoding.dev/images/medium/14",
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.fitHeight,
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) {
-              return child;
-            }
-            return Center(
-              child: CircularProgressIndicator(
-                value: loadingProgress.expectedTotalBytes != null
-                    ? loadingProgress.cumulativeBytesLoaded /
-                        loadingProgress.expectedTotalBytes!
-                    : null,
-              ),
-            );
-          },
-        ),
-      ),
     );
   }
 
