@@ -124,7 +124,7 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
                       onPressed: () =>
                           Provider.of<ApiProvider>(context, listen: false)
                               .fetchResultRestaurant(queryString),
-                      child: const Text('Refresh Data'))
+                      child: const Text('Reload Data'))
                 ],
               ),
             ),

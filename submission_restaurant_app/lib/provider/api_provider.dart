@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:submission_restaurant_app/data/api/api_service.dart';
 import 'package:submission_restaurant_app/data/model/post_review_body.dart';
@@ -42,7 +44,7 @@ class ApiProvider extends ChangeNotifier {
       if (restaurants.restaurants.isEmpty) {
         _state = ResultState.noData;
         notifyListeners();
-        return _message = 'empty data';
+        return _message = 'There is No Data';
       } else {
         _state = ResultState.hasData;
         notifyListeners();
@@ -50,8 +52,9 @@ class ApiProvider extends ChangeNotifier {
       }
     } catch (e) {
       _state = ResultState.error;
+      log('Error --> $e');
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Please Check Your Internet Connection';
     }
   }
   
@@ -65,7 +68,7 @@ class ApiProvider extends ChangeNotifier {
       if (detail.error == true) {
         _state = ResultState.noData;
         notifyListeners();
-        return _message = 'empty data';
+        return _message = 'There is No Data';
       } else {
         _state = ResultState.hasData;
         notifyListeners();
@@ -73,8 +76,9 @@ class ApiProvider extends ChangeNotifier {
       }
     } catch (e) {
       _state = ResultState.error;
+      log('Error --> $e');
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Please Check Your Internet Connection';
     }
   }
 
@@ -96,8 +100,9 @@ class ApiProvider extends ChangeNotifier {
       }
     } catch (e) {
       _state = ResultState.error;
+      log('Error --> $e');
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Please Check Your Internet Connection';
     }
   }
 
@@ -119,8 +124,9 @@ class ApiProvider extends ChangeNotifier {
       }
     } catch (e) {
       _state = ResultState.error;
+      log('Error --> $e');
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Please Check Your Internet Connection';
     }
   }
 }

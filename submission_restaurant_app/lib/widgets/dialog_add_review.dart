@@ -93,7 +93,7 @@ class _DialogAddReviewState extends State<DialogAddReview> {
       _showSnackbar('Processing');
     } else if (provider.state == ResultState.hasData) {
       _showSnackbar('Review Added');
-      Future.delayed(const Duration(seconds: 4), () => Navigator.of(context).pop());
+      Navigator.of(context).pop();
     } else if (provider.state == ResultState.noData) {
       _showSnackbar('Review Failed to add');
     } else if (provider.state == ResultState.error) {

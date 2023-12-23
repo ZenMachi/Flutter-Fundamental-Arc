@@ -84,7 +84,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                   const SizedBox(height: 24,),
                   OutlinedButton(
                       onPressed: () => Provider.of<ApiProvider>(context, listen: false).fetchListRestaurant(),
-                      child: const Text('Refresh Data'))
+                      child: const Text('Reload Data'))
                 ],
               ),
             ),

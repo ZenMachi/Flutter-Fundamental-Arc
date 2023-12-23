@@ -83,6 +83,7 @@ class RestaurantDetailPage extends StatelessWidget {
                               context, state.restaurantDetailResult),
                           const SizedBox(height: 24),
                           _buildMenu(context, state.restaurantDetailResult),
+                          const SizedBox(height: 56),
                         ],
                       ),
                     ),
@@ -98,19 +99,21 @@ class RestaurantDetailPage extends StatelessWidget {
             ),
           );
         } else if (state.state == ResultState.error) {
-          return Center(
-            child: Material(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(state.message),
-                  OutlinedButton(
-                      onPressed: () =>
-                          Provider.of<ApiProvider>(context, listen: false)
-                              .fetchDetailRestaurant(id),
-                      child: const Text('Refresh Data'))
-                ],
+          return Scaffold(
+            body: Material(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(state.message),
+                    OutlinedButton(
+                        onPressed: () =>
+                            Provider.of<ApiProvider>(context, listen: false)
+                                .fetchDetailRestaurant(id),
+                        child: const Text('Reload Data'))
+                  ],
+                ),
               ),
             ),
           );
