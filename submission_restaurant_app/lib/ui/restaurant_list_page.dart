@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -17,22 +16,9 @@ class RestaurantListPage extends StatefulWidget {
 }
 
 class _RestaurantListPageState extends State<RestaurantListPage> {
-  final SearchController _searchController = SearchController();
-  FocusNode searchFocus = FocusNode();
-  String searchString = '';
-
-  @override
-  void initState() {
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-    final iconSearch = searchFocus.hasPrimaryFocus
-        ? const Icon(Icons.clear)
-        : const Icon(Icons.search);
-
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -56,32 +42,6 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
     );
   }
 
-  SearchBar _buildSearchBar(Icon iconSearch) {
-    return SearchBar(
-      focusNode: searchFocus,
-      controller: _searchController,
-      elevation: MaterialStateProperty.all(1),
-      hintText: 'Search Restaurant',
-      onChanged: (value) {
-        setState(() {
-          searchString = value;
-        });
-      },
-      trailing: [
-        IconButton(
-          icon: iconSearch,
-          onPressed: () {
-            setState(() {
-              searchString = '';
-              _searchController.clear();
-              searchFocus.unfocus();
-            });
-          },
-        )
-      ],
-    );
-  }
-
   Widget _buildRestaurantItem() {
     return Consumer<ApiProvider>(
       builder: (context, state, child) {
@@ -94,7 +54,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
             child: ListView.builder(
                 itemCount: state.restaurantListResult.count,
                 itemBuilder: (context, index) {
-                  return CardRestaurantItem(
+                  return CardRestaurant(
                     restaurant: state.restaurantListResult.restaurants[index],
                     onTap: () {
                       Provider.of<ApiProvider>(context, listen: false)

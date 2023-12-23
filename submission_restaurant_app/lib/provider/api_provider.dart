@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:submission_restaurant_app/data/api/api_service.dart';
+import 'package:submission_restaurant_app/data/model/post_review_body.dart';
 import 'package:submission_restaurant_app/data/model/restaurant_detail.dart';
 import 'package:submission_restaurant_app/data/model/restaurant_search.dart';
 import 'package:submission_restaurant_app/data/model/restaurants_list.dart';
@@ -84,14 +85,37 @@ class ApiProvider extends ChangeNotifier {
 
       final result = await apiService.getRestaurantSearchResult(query);
 
-      if (result.error == true) {
+      if (result.restaurants.isEmpty) {
         _state = ResultState.noData;
         notifyListeners();
-        return _message = 'empty data';
+        return _message = 'Not Found';
       } else {
         _state = ResultState.hasData;
         notifyListeners();
         return _restaurantSearchResult = result;
+      }
+    } catch (e) {
+      _state = ResultState.error;
+      notifyListeners();
+      return _message = 'Error --> $e';
+    }
+  }
+
+  Future<dynamic> postReviewResturant(PostReviewBody reviewBody) async {
+    try {
+      _state = ResultState.loading;
+      notifyListeners();
+
+      final result = await apiService.postReviewRestaurant(reviewBody);
+
+      if (result.error == true) {
+        _state = ResultState.noData;
+        notifyListeners();
+        return _message = result.message;
+      } else {
+        _state = ResultState.hasData;
+        notifyListeners();
+        return _restaurantDetail.restaurant.customerReviews = result.customerReviews;
       }
     } catch (e) {
       _state = ResultState.error;

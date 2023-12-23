@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:provider/provider.dart';
-import 'package:submission_restaurant_app/provider/api_provider.dart';
 import 'package:submission_restaurant_app/ui/restaurant_list_page.dart';
 import 'package:submission_restaurant_app/ui/restaurant_search_page.dart';
+import 'package:submission_restaurant_app/ui/settings_page.dart';
 
 class RestaurantHomePage extends StatefulWidget {
   static const routeName = '/';
@@ -52,6 +51,7 @@ class _RestaurantHomePageState extends State<RestaurantHomePage> {
 
   final List<Widget>_listWidget = [
     const RestaurantListPage(),
-    const RestaurantSearchPage()
+    const RestaurantSearchPage(),
+    const SettingsPage()
   ];
 }

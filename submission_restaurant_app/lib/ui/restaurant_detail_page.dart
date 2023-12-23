@@ -6,6 +6,8 @@ import 'package:sizer/sizer.dart';
 import 'package:submission_restaurant_app/data/model/restaurant_detail.dart';
 import 'package:submission_restaurant_app/provider/api_provider.dart';
 import 'package:submission_restaurant_app/widgets/card_menu_item.dart';
+import 'package:submission_restaurant_app/widgets/dialog_add_review.dart';
+import 'package:submission_restaurant_app/widgets/dialog_review_item.dart';
 
 class RestaurantDetailPage extends StatelessWidget {
   static const routeName = '/restaurant_detail';
@@ -18,19 +20,27 @@ class RestaurantDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildContent();
+    return _buildContent(context);
   }
 
-  Scaffold _buildContent() {
-    return Scaffold(
-      body: Consumer<ApiProvider>(
-        builder: (context, state, child) {
-          if (state.state == ResultState.loading) {
-            return const Center(
-              child: Material(child: CircularProgressIndicator()),
-            );
-          } else if (state.state == ResultState.hasData) {
-            return NestedScrollView(
+  Consumer _buildContent(BuildContext context) {
+    return Consumer<ApiProvider>(
+      builder: (context, state, child) {
+        if (state.state == ResultState.loading) {
+          return const Center(
+            child: Material(child: CircularProgressIndicator()),
+          );
+        } else if (state.state == ResultState.hasData) {
+          return Scaffold(
+            floatingActionButton: FloatingActionButton.extended(
+                elevation: 0,
+                icon: Icon(Icons.add),
+                label: Text('Add Review'),
+                onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) =>
+                        DialogAddReview(context: context, id: id))),
+            body: NestedScrollView(
               headerSliverBuilder: (context, isScrolled) => [
                 SliverAppBar(
                   expandedHeight: 300,
@@ -52,6 +62,7 @@ class RestaurantDetailPage extends StatelessWidget {
                           const SizedBox(height: 24),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Flexible(
                                 child: _buildNameAndLocation(
@@ -60,9 +71,10 @@ class RestaurantDetailPage extends StatelessWidget {
                               ElevatedButton(
                                   onPressed: () => showDialog(
                                       context: context,
-                                      builder: (context) => _buildReviewDialog(
-                                          context,
-                                          state.restaurantDetailResult)),
+                                      builder: (context) => DialogReviewItem(
+                                          context: context,
+                                          detail:
+                                              state.restaurantDetailResult)),
                                   child: Text('Reviews'))
                             ],
                           ),
@@ -77,79 +89,39 @@ class RestaurantDetailPage extends StatelessWidget {
                   ],
                 ),
               ),
-            );
-          } else if (state.state == ResultState.noData) {
-            return Center(
-              child: Material(
-                child: Text(state.message),
-              ),
-            );
-          } else if (state.state == ResultState.error) {
-            return Center(
-              child: Material(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(state.message),
-                    OutlinedButton(
-                        onPressed: () => Provider.of<ApiProvider>(
-                                context,
-                                listen: false)
-                            .fetchDetailRestaurant(id),
-                        child: Text('Refresh Data'))
-                  ],
-                ),
-              ),
-            );
-          } else {
-            return Scaffold(
-              body: const Center(
-                child: Text('Unknown Error'),
-              ),
-            );
-          }
-        },
-      ),
-    );
-  }
-
-  AlertDialog _buildReviewDialog(
-      BuildContext context, RestaurantDetail detail) {
-    return AlertDialog(
-      scrollable: true,
-      title: Text('Reviews'),
-      actions: [
-        ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(), child: Text('Close'))
-      ],
-      content: SizedBox(
-        height: 300,
-        width: 300,
-        child: ListView.builder(
-            itemCount: detail.restaurant.customerReviews.length,
-            itemBuilder: (context, index) {
-              return Column(
+            ),
+          );
+        } else if (state.state == ResultState.noData) {
+          return Center(
+            child: Material(
+              child: Text(state.message),
+            ),
+          );
+        } else if (state.state == ResultState.error) {
+          return Center(
+            child: Material(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ListTile(
-                    isThreeLine: false,
-                    title: Text(detail.restaurant.customerReviews[index].name),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(detail.restaurant.customerReviews[index].review),
-                        SizedBox(
-                          height: 12,
-                        ),
-                        Text(detail.restaurant.customerReviews[index].date),
-                      ],
-                    ),
-                  ),
-                  Divider()
+                  Text(state.message),
+                  OutlinedButton(
+                      onPressed: () =>
+                          Provider.of<ApiProvider>(context, listen: false)
+                              .fetchDetailRestaurant(id),
+                      child: Text('Refresh Data'))
                 ],
-              );
-            }),
-      ),
+              ),
+            ),
+          );
+        } else {
+          return Scaffold(
+            body: const Center(
+              child: Text('Unknown Error'),
+            ),
+          );
+        }
+      },
     );
   }
 

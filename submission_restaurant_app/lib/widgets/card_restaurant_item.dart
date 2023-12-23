@@ -5,11 +5,11 @@ import 'package:submission_restaurant_app/data/model/restaurants_list.dart';
 
 import '../data/model/restaurant.dart';
 
-class CardRestaurantItem extends StatelessWidget {
+class CardRestaurant extends StatelessWidget {
   final Restaurant restaurant;
   final Function() onTap;
 
-  const CardRestaurantItem(
+  const CardRestaurant(
       {super.key, required this.restaurant, required this.onTap});
 
   @override

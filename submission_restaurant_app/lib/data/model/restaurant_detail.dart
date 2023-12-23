@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:submission_restaurant_app/data/model/customer_review.dart';
 
 class RestaurantDetail {
   bool error;
@@ -122,23 +123,3 @@ class Food {
       );
 }
 
-class CustomerReview {
-  String name;
-  String review;
-  String date;
-
-  CustomerReview({
-    required this.name,
-    required this.review,
-    required this.date,
-  });
-
-  factory CustomerReview.fromRawJson(String str) =>
-      CustomerReview.fromJson(json.decode(str));
-
-  factory CustomerReview.fromJson(Map<String, dynamic> json) => CustomerReview(
-        name: json["name"],
-        review: json["review"],
-        date: json["date"],
-      );
-}

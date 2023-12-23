@@ -5,6 +5,7 @@ import 'package:sizer/sizer.dart';
 import 'package:submission_restaurant_app/provider/api_provider.dart';
 import 'package:submission_restaurant_app/ui/restaurant_detail_page.dart';
 import 'package:submission_restaurant_app/widgets/card_restaurant_item.dart';
+import 'package:submission_restaurant_app/widgets/search_bar_restaurant.dart';
 
 class RestaurantSearchPage extends StatefulWidget {
   static const routeName = '/restaurant_search';
@@ -16,16 +17,18 @@ class RestaurantSearchPage extends StatefulWidget {
 }
 
 class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
-  final SearchController _searchController = SearchController();
-  FocusNode searchFocus = FocusNode();
-  String searchString = '';
   String queryString = '';
+
+  callback(String onSubmit) {
+    setState(() {
+      queryString = onSubmit;
+      Provider.of<ApiProvider>(context, listen: false)
+          .fetchResultRestaurant(queryString);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final iconSearch = searchFocus.hasPrimaryFocus
-        ? const Icon(Icons.clear)
-        : const Icon(Icons.search);
     final buildResultItem = queryString.isEmpty
         ? Center(
             child: Column(
@@ -48,9 +51,11 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
                     style: Theme.of(context).textTheme.displayMedium?.apply(
                         color: Theme.of(context).colorScheme.onBackground)),
                 SizedBox(height: 8.h),
-                _buildSearchBar(iconSearch),
+                SearchBarRestaurant(
+                  onSubmitted: callback,
+                ),
                 SizedBox(height: 4.h),
-                Text('Nearest Restaurant for You!',
+                Text('Find your Restaurant, Category or Menu',
                     style: Theme.of(context).textTheme.titleMedium?.apply(
                         color: Theme.of(context).colorScheme.onBackground)),
                 buildResultItem
@@ -60,45 +65,18 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
     );
   }
 
-  SearchBar _buildSearchBar(Icon iconSearch) {
-    return SearchBar(
-      focusNode: searchFocus,
-      controller: _searchController,
-      elevation: MaterialStateProperty.all(1),
-      hintText: 'Search Restaurant',
-      onChanged: (value) {
-        setState(() {
-          searchString = value;
-        });
-      },
-      onSubmitted: (query) {
-        setState(() {
-          queryString = query;
-          Provider.of<ApiProvider>(context, listen: false)
-              .fetchResultRestaurant(query);
-        });
-      },
-      trailing: [
-        IconButton(
-          icon: iconSearch,
-          onPressed: () {
-            setState(() {
-              searchString = '';
-              _searchController.clear();
-              searchFocus.unfocus();
-            });
-          },
-        )
-      ],
-    );
-  }
-
   Widget _buildRestaurantItem() {
     return Consumer<ApiProvider>(
       builder: (context, state, child) {
         if (state.state == ResultState.loading) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: Column(
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 24),
+                Text('Searching for Data')
+              ],
+            ),
           );
         } else if (state.state == ResultState.hasData) {
           if (state.restaurantSearchResult.restaurants.isNotEmpty) {
@@ -106,7 +84,7 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
               child: ListView.builder(
                   itemCount: state.restaurantSearchResult.founded,
                   itemBuilder: (context, index) {
-                    return CardRestaurantItem(
+                    return CardRestaurant(
                       restaurant:
                           state.restaurantSearchResult.restaurants[index],
                       onTap: () {
@@ -160,3 +138,5 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
     );
   }
 }
+
+
