@@ -22,7 +22,6 @@ class _RestaurantHomePageState extends State<RestaurantHomePage> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,15 +40,13 @@ class _RestaurantHomePageState extends State<RestaurantHomePage> {
   }
 
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
-    const BottomNavigationBarItem(
-        icon: Icon(Icons.home), label: 'Home'),
-    const BottomNavigationBarItem(
-        icon: Icon(Icons.search), label: 'Search'),
+    const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+    const BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
     const BottomNavigationBarItem(
         icon: Icon(Icons.settings), label: 'Settings'),
   ];
 
-  final List<Widget>_listWidget = [
+  final List<Widget> _listWidget = [
     const RestaurantListPage(),
     const RestaurantSearchPage(),
     const SettingsPage()

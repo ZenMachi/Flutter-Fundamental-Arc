@@ -18,7 +18,8 @@ class DialogReviewItem extends StatelessWidget {
       title: const Text('Reviews'),
       actions: [
         ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(), child: const Text('Close'))
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Close'))
       ],
       content: SizedBox(
         height: 300,

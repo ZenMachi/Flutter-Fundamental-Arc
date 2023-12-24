@@ -12,5 +12,4 @@ class ThemeProvider extends ChangeNotifier {
     _theme = _isDark ? ThemeMode.dark : ThemeMode.light;
     notifyListeners();
   }
-
 }

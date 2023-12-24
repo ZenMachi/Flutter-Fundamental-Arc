@@ -11,19 +11,20 @@ class PostReviewBody {
     required this.review,
   });
 
-  factory PostReviewBody.fromRawJson(String str) => PostReviewBody.fromJson(json.decode(str));
+  factory PostReviewBody.fromRawJson(String str) =>
+      PostReviewBody.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory PostReviewBody.fromJson(Map<String, dynamic> json) => PostReviewBody(
-    id: json["id"],
-    name: json["name"],
-    review: json["review"],
-  );
+        id: json["id"],
+        name: json["name"],
+        review: json["review"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "review": review,
-  };
+        "id": id,
+        "name": name,
+        "review": review,
+      };
 }

@@ -37,8 +37,8 @@ class _DialogAddReviewState extends State<DialogAddReview> {
             child: const Text('Add'))
       ],
       content: ConstrainedBox(
-          constraints:
-              const BoxConstraints(minHeight: 200, minWidth: 300, maxWidth: 300),
+          constraints: const BoxConstraints(
+              minHeight: 200, minWidth: 300, maxWidth: 300),
           child: Form(
               key: _formKey,
               child: Column(
@@ -98,7 +98,8 @@ class _DialogAddReviewState extends State<DialogAddReview> {
       _showSnackbar('Review Failed to add');
     } else if (provider.state == ResultState.error) {
       _showSnackbar(provider.message);
-      Future.delayed(const Duration(milliseconds: 750), () => Navigator.of(context).pop());
+      Future.delayed(
+          const Duration(milliseconds: 750), () => Navigator.of(context).pop());
     } else {
       _showSnackbar('Unknown Error');
     }

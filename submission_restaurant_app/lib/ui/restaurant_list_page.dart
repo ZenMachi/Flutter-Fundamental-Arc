@@ -16,7 +16,6 @@ class RestaurantListPage extends StatefulWidget {
 }
 
 class _RestaurantListPageState extends State<RestaurantListPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +60,9 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                           .fetchDetailRestaurant(
                               state.restaurantListResult.restaurants[index].id);
                       Navigator.pushNamed(
-                          context, RestaurantDetailPage.routeName, arguments: state.restaurantListResult.restaurants[index].id);
+                          context, RestaurantDetailPage.routeName,
+                          arguments:
+                              state.restaurantListResult.restaurants[index].id);
                     },
                   );
                 }),
@@ -81,9 +82,13 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                 children: [
                   Lottie.asset('assets/error_cat.json', height: 240),
                   Text(state.message),
-                  const SizedBox(height: 24,),
+                  const SizedBox(
+                    height: 24,
+                  ),
                   OutlinedButton(
-                      onPressed: () => Provider.of<ApiProvider>(context, listen: false).fetchListRestaurant(),
+                      onPressed: () =>
+                          Provider.of<ApiProvider>(context, listen: false)
+                              .fetchListRestaurant(),
                       child: const Text('Reload Data'))
                 ],
               ),

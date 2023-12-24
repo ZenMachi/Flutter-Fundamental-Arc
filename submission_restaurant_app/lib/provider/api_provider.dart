@@ -57,7 +57,7 @@ class ApiProvider extends ChangeNotifier {
       return _message = 'Please Check Your Internet Connection';
     }
   }
-  
+
   Future<dynamic> fetchDetailRestaurant(String id) async {
     try {
       _state = ResultState.loading;
@@ -120,7 +120,8 @@ class ApiProvider extends ChangeNotifier {
       } else {
         _state = ResultState.hasData;
         notifyListeners();
-        return _restaurantDetail.restaurant.customerReviews = result.customerReviews;
+        return _restaurantDetail.restaurant.customerReviews =
+            result.customerReviews;
       }
     } catch (e) {
       _state = ResultState.error;

@@ -122,4 +122,3 @@ class Food {
         name: json["name"],
       );
 }
-

@@ -13,14 +13,13 @@ class ReviewResponse {
     required this.customerReviews,
   });
 
-  factory ReviewResponse.fromRawJson(String str) => ReviewResponse.fromJson(json.decode(str));
+  factory ReviewResponse.fromRawJson(String str) =>
+      ReviewResponse.fromJson(json.decode(str));
 
   factory ReviewResponse.fromJson(Map<String, dynamic> json) => ReviewResponse(
-    error: json["error"],
-    message: json["message"],
-    customerReviews: List<CustomerReview>.from(json["customerReviews"].map((x) => CustomerReview.fromJson(x))),
-  );
-
+        error: json["error"],
+        message: json["message"],
+        customerReviews: List<CustomerReview>.from(
+            json["customerReviews"].map((x) => CustomerReview.fromJson(x))),
+      );
 }
-
-

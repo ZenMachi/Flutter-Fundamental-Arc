@@ -31,11 +31,17 @@ final myTextTheme = TextTheme(
       fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
   // Label
   labelLarge: GoogleFonts.roboto(
-      fontSize: 14, fontWeight: FontWeight.w500,),
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+  ),
   labelMedium: GoogleFonts.roboto(
-      fontSize: 14, fontWeight: FontWeight.w500,),
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+  ),
   labelSmall: GoogleFonts.roboto(
-      fontSize: 10, fontWeight: FontWeight.w500,),
+    fontSize: 10,
+    fontWeight: FontWeight.w500,
+  ),
 );
 
 const lightColorScheme = ColorScheme(
