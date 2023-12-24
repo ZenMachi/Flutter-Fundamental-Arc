@@ -29,8 +29,6 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                     style: Theme.of(context).textTheme.displayMedium?.apply(
                         color: Theme.of(context).colorScheme.onBackground)),
                 SizedBox(height: 8.h),
-                // _buildSearchBar(iconSearch),
-                // SizedBox(height: 4.h),
                 Text('Nearest Restaurant for You!',
                     style: Theme.of(context).textTheme.titleMedium?.apply(
                         color: Theme.of(context).colorScheme.onBackground)),
