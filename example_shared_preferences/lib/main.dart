@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -56,6 +57,25 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  static const String counterNumberPrefs = 'counterNumber';
+
+  void _saveNumber() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt(counterNumberPrefs, _counter);
+  }
+
+  void _loadNumber() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _counter = prefs.getInt(counterNumberPrefs) ?? 0;
+    });
+  }
+
+  void _resetNumber() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove(counterNumberPrefs);
+    _loadNumber();
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -65,7 +85,15 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+      _saveNumber();
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadNumber();
   }
 
   @override
@@ -112,6 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            OutlinedButton(onPressed: _resetNumber, child: Text('Reset'))
           ],
         ),
       ),
