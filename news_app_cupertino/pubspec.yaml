@@ -40,6 +40,11 @@ dependencies:
   http:
   provider:
 
+  intl:
+  flutter_local_notifications:
+  rxdart:
+  android_alarm_manager_plus: ^2.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
