@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class ArticlesResult {
   ArticlesResult({
@@ -22,6 +21,12 @@ class ArticlesResult {
                 article.publishedAt != null &&
                 article.content != null)),
       );
+
+  Map<String, dynamic> toJson() => {
+    "status": status,
+    "totalResults": totalResults,
+    "articles": List<dynamic>.from(articles.map((x) => x.toJson())),
+  };
 }
 
 class Article {
@@ -52,4 +57,14 @@ class Article {
         publishedAt: DateTime.parse(json["publishedAt"]),
         content: json["content"],
       );
+
+  Map<String, dynamic> toJson() => {
+    "author": author,
+    "title": title,
+    "description": description,
+    "url": url,
+    "urlToImage": urlToImage,
+    "publishedAt": publishedAt?.toIso8601String(),
+    "content": content,
+  };
 }

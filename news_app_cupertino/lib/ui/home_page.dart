@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/data/api/api_service.dart';
 import 'package:news_app/provider/news_provider.dart';
+import 'package:news_app/provider/scheduling_provider.dart';
 import 'package:news_app/ui/article_list_page.dart';
 import 'package:news_app/widgets/platform_widget.dart';
 import 'package:news_app/ui/settings_page.dart';
@@ -67,6 +68,9 @@ class _NewsListPageState extends State<NewsListPage> {
       create: (_) => NewsProvider(apiService: ApiService()),
       child: const ArticleListPage(),
     ),
-    const SettingsPage()
+    ChangeNotifierProvider<SchedulingProvider>(
+      create: (_) => SchedulingProvider(),
+      child: const SettingsPage(),
+    ),
   ];
 }
