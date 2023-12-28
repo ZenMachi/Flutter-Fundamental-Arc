@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:submission_restaurant_app/common/navigation.dart';
 import 'package:submission_restaurant_app/provider/api_provider.dart';
 import 'package:submission_restaurant_app/ui/restaurant_detail_page.dart';
 import 'package:submission_restaurant_app/widgets/card_restaurant_item.dart';
@@ -57,10 +58,8 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                       Provider.of<ApiProvider>(context, listen: false)
                           .fetchDetailRestaurant(
                               state.restaurantListResult.restaurants[index].id);
-                      Navigator.pushNamed(
-                          context, RestaurantDetailPage.routeName,
-                          arguments:
-                              state.restaurantListResult.restaurants[index].id);
+                      Navigation.intentWithData(RestaurantDetailPage.routeName,
+                          state.restaurantListResult.restaurants[index].id);
                     },
                   );
                 }),
