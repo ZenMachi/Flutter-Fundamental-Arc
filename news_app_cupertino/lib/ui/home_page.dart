@@ -6,6 +6,7 @@ import 'package:news_app/data/api/api_service.dart';
 import 'package:news_app/provider/news_provider.dart';
 import 'package:news_app/provider/scheduling_provider.dart';
 import 'package:news_app/ui/article_list_page.dart';
+import 'package:news_app/ui/bookmarks_page.dart';
 import 'package:news_app/widgets/platform_widget.dart';
 import 'package:news_app/ui/settings_page.dart';
 import 'package:news_app/common/styles.dart';
@@ -59,12 +60,19 @@ class _HomePageState extends State<HomePage> {
         icon: Icon(Platform.isIOS ? CupertinoIcons.news : Icons.public),
         label: 'Headline'),
     BottomNavigationBarItem(
+      icon: Icon(Platform.isIOS
+          ? CupertinoIcons.bookmark
+          : Icons.collections_bookmark),
+      label: BookmarksPage.bookmarksTitle,
+    ),
+    BottomNavigationBarItem(
         icon: Icon(Platform.isIOS ? CupertinoIcons.settings : Icons.settings),
         label: 'Settings'),
   ];
 
   final List<Widget> _listWidget = [
     ArticleListPage(),
+    BookmarksPage(),
     SettingsPage(),
   ];
 }

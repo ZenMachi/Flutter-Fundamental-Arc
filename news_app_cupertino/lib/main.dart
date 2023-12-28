@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:news_app/common/navigation.dart';
 import 'package:news_app/data/api/api_service.dart';
+import 'package:news_app/data/db/database_helper.dart';
 import 'package:news_app/data/model/article.dart';
 import 'package:news_app/data/preferences/preferences_helper.dart';
+import 'package:news_app/provider/database_provider.dart';
 import 'package:news_app/provider/news_provider.dart';
 import 'package:news_app/provider/preferences_provider.dart';
 import 'package:news_app/provider/scheduling_provider.dart';
@@ -58,6 +60,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        ChangeNotifierProvider(create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper())),
       ],
       child: Consumer<PreferencesProvider>(builder: (context, provider, child) {
         return MaterialApp(
