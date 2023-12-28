@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:submission_restaurant_app/ui/restaurant_detail_page.dart';
 import 'package:submission_restaurant_app/ui/restaurant_list_page.dart';
 import 'package:submission_restaurant_app/ui/restaurant_search_page.dart';
 import 'package:submission_restaurant_app/ui/settings_page.dart';
+import 'package:submission_restaurant_app/utils/notification_helper.dart';
 
 class RestaurantHomePage extends StatefulWidget {
   static const routeName = '/';
@@ -14,12 +16,15 @@ class RestaurantHomePage extends StatefulWidget {
 }
 
 class _RestaurantHomePageState extends State<RestaurantHomePage> {
+  final NotificationHelper _notificationHelper = NotificationHelper();
   int _bottomNavIndex = 0;
 
   @override
   void initState() {
-    FlutterNativeSplash.remove();
     super.initState();
+    FlutterNativeSplash.remove();
+    _notificationHelper.configureSelectNotificationSubject(
+        context, RestaurantDetailPage.routeName);
   }
 
   @override
@@ -37,6 +42,12 @@ class _RestaurantHomePageState extends State<RestaurantHomePage> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    selectNotificationSubject.close();
   }
 
   final List<BottomNavigationBarItem> _bottomNavBarItems = [

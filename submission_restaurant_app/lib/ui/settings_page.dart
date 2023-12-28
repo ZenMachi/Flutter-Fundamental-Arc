@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:submission_restaurant_app/provider/scheduling_provider.dart';
 import 'package:submission_restaurant_app/provider/theme_provider.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -35,6 +36,18 @@ class _SettingsPageState extends State<SettingsPage> {
                           onChanged: (value) =>
                               Provider.of<ThemeProvider>(context, listen: false)
                                   .toggleTheme(value)),
+                    ),
+                    ListTile(
+                      title: const Text('Recomendation Notification'),
+                      subtitle:
+                          const Text('Notify Me Restaurant Recommendation'),
+                      trailing: Switch.adaptive(
+                          value: Provider.of<SchedulingProvider>(context)
+                              .isScheduled,
+                          onChanged: (value) => Provider.of<SchedulingProvider>(
+                                  context,
+                                  listen: false)
+                              .scheduledRestaurant(value)),
                     )
                   ],
                 )

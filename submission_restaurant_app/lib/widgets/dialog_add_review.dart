@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:submission_restaurant_app/common/navigation.dart';
 import 'package:submission_restaurant_app/data/model/post_review_body.dart';
 import 'package:submission_restaurant_app/provider/api_provider.dart';
 
@@ -93,7 +94,7 @@ class _DialogAddReviewState extends State<DialogAddReview> {
       _showSnackbar('Processing');
     } else if (provider.state == ResultState.hasData) {
       _showSnackbar('Review Added');
-      Navigator.of(context).pop();
+      Navigation.back();
     } else if (provider.state == ResultState.noData) {
       _showSnackbar('Review Failed to add');
     } else if (provider.state == ResultState.error) {
