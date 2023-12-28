@@ -11,16 +11,16 @@ import 'package:news_app/ui/settings_page.dart';
 import 'package:news_app/common/styles.dart';
 import 'package:provider/provider.dart';
 
-class NewsListPage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
 
-  const NewsListPage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<NewsListPage> createState() => _NewsListPageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _NewsListPageState extends State<NewsListPage> {
+class _HomePageState extends State<HomePage> {
   int _bottomNavIndex = 0;
 
   @override
@@ -64,13 +64,7 @@ class _NewsListPageState extends State<NewsListPage> {
   ];
 
   final List<Widget> _listWidget = [
-    ChangeNotifierProvider<NewsProvider>(
-      create: (_) => NewsProvider(apiService: ApiService()),
-      child: const ArticleListPage(),
-    ),
-    ChangeNotifierProvider<SchedulingProvider>(
-      create: (_) => SchedulingProvider(),
-      child: const SettingsPage(),
-    ),
+    ArticleListPage(),
+    SettingsPage(),
   ];
 }
