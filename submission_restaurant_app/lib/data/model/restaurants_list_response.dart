@@ -2,33 +2,37 @@ import 'dart:convert';
 
 import 'package:submission_restaurant_app/data/model/restaurant.dart';
 
-class RestaurantSearch {
+class RestaurantsListResponse {
   bool error;
-  int founded;
+  String message;
+  int count;
   List<Restaurant> restaurants;
 
-  RestaurantSearch({
+  RestaurantsListResponse({
     required this.error,
-    required this.founded,
+    required this.message,
+    required this.count,
     required this.restaurants,
   });
 
-  factory RestaurantSearch.fromRawJson(String str) =>
-      RestaurantSearch.fromJson(json.decode(str));
+  factory RestaurantsListResponse.fromRawJson(String str) =>
+      RestaurantsListResponse.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory RestaurantSearch.fromJson(Map<String, dynamic> json) =>
-      RestaurantSearch(
+  factory RestaurantsListResponse.fromJson(Map<String, dynamic> json) =>
+      RestaurantsListResponse(
         error: json["error"],
-        founded: json["founded"],
+        message: json["message"],
+        count: json["count"],
         restaurants: List<Restaurant>.from(
             json["restaurants"].map((x) => Restaurant.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "error": error,
-        "founded": founded,
+        "message": message,
+        "count": count,
         "restaurants": List<dynamic>.from(restaurants.map((x) => x.toJson())),
       };
 }

@@ -51,6 +51,9 @@ dependencies:
   rxdart:
   android_alarm_manager_plus: ^2.0.2
 
+  sqflite:
+  shared_preferences:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

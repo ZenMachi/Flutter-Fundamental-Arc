@@ -5,6 +5,7 @@ import 'package:sizer/sizer.dart';
 import 'package:submission_restaurant_app/common/navigation.dart';
 import 'package:submission_restaurant_app/provider/api_provider.dart';
 import 'package:submission_restaurant_app/ui/restaurant_detail_page.dart';
+import 'package:submission_restaurant_app/utils/result_state.dart';
 import 'package:submission_restaurant_app/widgets/card_restaurant_item.dart';
 import 'package:submission_restaurant_app/widgets/search_bar_restaurant.dart';
 

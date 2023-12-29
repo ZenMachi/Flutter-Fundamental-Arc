@@ -1,29 +1,29 @@
 import 'dart:convert';
 import 'package:submission_restaurant_app/data/model/customer_review.dart';
 
-class RestaurantDetail {
+class RestaurantDetailResponse {
   bool error;
   String message;
-  Restaurant restaurant;
+  RestaurantDetail restaurant;
 
-  RestaurantDetail({
+  RestaurantDetailResponse({
     required this.error,
     required this.message,
     required this.restaurant,
   });
 
-  factory RestaurantDetail.fromRawJson(String str) =>
-      RestaurantDetail.fromJson(json.decode(str));
+  factory RestaurantDetailResponse.fromRawJson(String str) =>
+      RestaurantDetailResponse.fromJson(json.decode(str));
 
-  factory RestaurantDetail.fromJson(Map<String, dynamic> json) =>
-      RestaurantDetail(
+  factory RestaurantDetailResponse.fromJson(Map<String, dynamic> json) =>
+      RestaurantDetailResponse(
         error: json["error"],
         message: json["message"],
-        restaurant: Restaurant.fromJson(json["restaurant"]),
+        restaurant: RestaurantDetail.fromJson(json["restaurant"]),
       );
 }
 
-class Restaurant {
+class RestaurantDetail {
   String id;
   String name;
   String description;
@@ -35,7 +35,7 @@ class Restaurant {
   double rating;
   List<CustomerReview> customerReviews;
 
-  Restaurant({
+  RestaurantDetail({
     required this.id,
     required this.name,
     required this.description,
@@ -48,10 +48,11 @@ class Restaurant {
     required this.customerReviews,
   });
 
-  factory Restaurant.fromRawJson(String str) =>
-      Restaurant.fromJson(json.decode(str));
+  factory RestaurantDetail.fromRawJson(String str) =>
+      RestaurantDetail.fromJson(json.decode(str));
 
-  factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(
+  factory RestaurantDetail.fromJson(Map<String, dynamic> json) =>
+      RestaurantDetail(
         id: json["id"],
         name: json["name"],
         description: json["description"],

@@ -3,8 +3,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:submission_restaurant_app/data/model/restaurant_detail.dart';
+import 'package:submission_restaurant_app/data/model/restaurant_detail_response.dart';
 import 'package:submission_restaurant_app/provider/api_provider.dart';
+import 'package:submission_restaurant_app/utils/result_state.dart';
+import 'package:submission_restaurant_app/widgets/button_favorite.dart';
 import 'package:submission_restaurant_app/widgets/card_menu_item.dart';
 import 'package:submission_restaurant_app/widgets/dialog_add_review.dart';
 import 'package:submission_restaurant_app/widgets/dialog_review_item.dart';
@@ -46,8 +48,8 @@ class RestaurantDetailPage extends StatelessWidget {
                   expandedHeight: 300,
                   pinned: true,
                   flexibleSpace: FlexibleSpaceBar(
-                    background:
-                        _buildImage(context, state.restaurantDetailResult),
+                    background: _buildImage(
+                        context, state.restaurantDetailResult.restaurant),
                   ),
                 )
               ],
@@ -128,7 +130,7 @@ class RestaurantDetailPage extends StatelessWidget {
     );
   }
 
-  Column _buildMenu(BuildContext context, RestaurantDetail detail) {
+  Column _buildMenu(BuildContext context, RestaurantDetailResponse detail) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -196,31 +198,40 @@ class RestaurantDetailPage extends StatelessWidget {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-      child: Hero(
-        tag: detail.restaurant.pictureId,
-        child: Image.network(
-          "https://restaurant-api.dicoding.dev/images/medium/${detail.restaurant.pictureId}",
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.fitHeight,
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) {
-              return child;
-            }
-            return Center(
-              child: CircularProgressIndicator(
-                value: loadingProgress.expectedTotalBytes != null
-                    ? loadingProgress.cumulativeBytesLoaded /
-                        loadingProgress.expectedTotalBytes!
-                    : null,
+      child: Stack(
+        alignment: AlignmentDirectional.bottomEnd,
+        children: [
+          Positioned.fill(
+            child: Hero(
+              tag: detail.pictureId,
+              child: Image.network(
+                "https://restaurant-api.dicoding.dev/images/medium/${detail.pictureId}",
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fitHeight,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
+            ),
+          ),
+          FavoriteButton(detail: detail),
+        ],
       ),
     );
   }
 
-  Column _buildDescription(BuildContext context, RestaurantDetail detail) {
+  Column _buildDescription(
+      BuildContext context, RestaurantDetailResponse detail) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -237,7 +248,8 @@ class RestaurantDetailPage extends StatelessWidget {
     );
   }
 
-  Column _buildNameAndLocation(BuildContext context, RestaurantDetail detail) {
+  Column _buildNameAndLocation(
+      BuildContext context, RestaurantDetailResponse detail) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
