@@ -6,6 +6,7 @@ import 'package:submission_restaurant_app/data/model/post_review_body.dart';
 import 'package:submission_restaurant_app/data/model/restaurant_detail_response.dart';
 import 'package:submission_restaurant_app/data/model/restaurant_search_response.dart';
 import 'package:submission_restaurant_app/data/model/restaurants_list_response.dart';
+import 'package:submission_restaurant_app/data/model/review_response.dart';
 import 'package:submission_restaurant_app/utils/result_state.dart';
 
 class ApiProvider extends ChangeNotifier {
@@ -33,6 +34,10 @@ class ApiProvider extends ChangeNotifier {
   late RestaurantDetailResponse _restaurantDetail;
 
   RestaurantDetailResponse get restaurantDetailResult => _restaurantDetail;
+
+  late ReviewResponse _reviewResponse;
+
+  ReviewResponse get reviewResponse => _reviewResponse;
 
   Future<dynamic> fetchListRestaurant() async {
     try {
@@ -92,6 +97,8 @@ class ApiProvider extends ChangeNotifier {
       if (result.restaurants.isEmpty) {
         _state = ResultState.noData;
         notifyListeners();
+        _restaurantSearchResult = result;
+
         return _message = 'Not Found';
       } else {
         _state = ResultState.hasData;
@@ -116,10 +123,13 @@ class ApiProvider extends ChangeNotifier {
       if (result.error == true) {
         _state = ResultState.noData;
         notifyListeners();
+
         return _message = result.message;
       } else {
         _state = ResultState.hasData;
         notifyListeners();
+        _reviewResponse = result;
+
         return _restaurantDetail.restaurant.customerReviews =
             result.customerReviews;
       }
