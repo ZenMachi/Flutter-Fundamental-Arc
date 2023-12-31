@@ -51,6 +51,9 @@ class CardRestaurant extends StatelessWidget {
                               ),
                             );
                           },
+                          errorBuilder: (_, __, ___) {
+                            return const Icon(Icons.error_outline);
+                          },
                         ),
                       ),
                     ),
