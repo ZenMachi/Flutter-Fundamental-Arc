@@ -5,6 +5,8 @@ import 'package:sizer/sizer.dart';
 import 'package:submission_restaurant_app/common/navigation.dart';
 import 'package:submission_restaurant_app/provider/api_provider.dart';
 import 'package:submission_restaurant_app/ui/restaurant_detail_page.dart';
+import 'package:submission_restaurant_app/ui/restaurant_favorite_page.dart';
+import 'package:submission_restaurant_app/utils/result_state.dart';
 import 'package:submission_restaurant_app/widgets/card_restaurant_item.dart';
 
 class RestaurantListPage extends StatefulWidget {
@@ -26,9 +28,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Restaurant',
-                    style: Theme.of(context).textTheme.displayMedium?.apply(
-                        color: Theme.of(context).colorScheme.onBackground)),
+                _buildTitle(context),
                 SizedBox(height: 8.h),
                 Text('Nearest Restaurant for You!',
                     style: Theme.of(context).textTheme.titleMedium?.apply(
@@ -37,6 +37,27 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
               ],
             )),
       ),
+    );
+  }
+
+  Row _buildTitle(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text('Restaurant',
+            style: Theme.of(context)
+                .textTheme
+                .displayMedium
+                ?.apply(color: Theme.of(context).colorScheme.onBackground)),
+        IconButton(
+            onPressed: () =>
+                Navigation.intent(RestaurantFavoritePage.routeName),
+            icon: const Icon(
+              Icons.favorite,
+              size: 32,
+            ))
+      ],
     );
   }
 

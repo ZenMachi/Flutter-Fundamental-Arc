@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:submission_restaurant_app/data/model/restaurant_detail.dart';
+import 'package:submission_restaurant_app/data/model/restaurant_detail_response.dart';
 
 class DialogReviewItem extends StatelessWidget {
   const DialogReviewItem({
@@ -9,7 +9,7 @@ class DialogReviewItem extends StatelessWidget {
   });
 
   final BuildContext context;
-  final RestaurantDetail detail;
+  final RestaurantDetailResponse detail;
 
   @override
   Widget build(BuildContext context) {

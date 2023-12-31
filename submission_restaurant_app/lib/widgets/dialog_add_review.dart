@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:submission_restaurant_app/common/navigation.dart';
 import 'package:submission_restaurant_app/data/model/post_review_body.dart';
 import 'package:submission_restaurant_app/provider/api_provider.dart';
+import 'package:submission_restaurant_app/utils/result_state.dart';
 
 class DialogAddReview extends StatefulWidget {
   const DialogAddReview({
@@ -88,7 +89,7 @@ class _DialogAddReviewState extends State<DialogAddReview> {
         PostReviewBody(id: id, name: name, review: review);
 
     var provider = Provider.of<ApiProvider>(context, listen: false);
-    await provider.postReviewResturant(reviewBody);
+    await provider.postReviewRestaurant(reviewBody);
 
     if (provider.state == ResultState.loading) {
       _showSnackbar('Processing');

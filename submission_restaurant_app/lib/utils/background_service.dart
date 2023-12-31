@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:http/http.dart';
 import 'package:submission_restaurant_app/data/api/api_service.dart';
 import 'package:submission_restaurant_app/main.dart';
 import 'package:submission_restaurant_app/utils/notification_helper.dart';
@@ -28,7 +29,7 @@ class BackgroundService {
     final NotificationHelper notificationHelper = NotificationHelper();
 
     try {
-      var result = await ApiService().getRestaurantsList();
+      var result = await ApiService(Client()).getRestaurantsList();
       var randomRestaurant = (result.restaurants..shuffle()).first;
 
       await notificationHelper.showNotification(

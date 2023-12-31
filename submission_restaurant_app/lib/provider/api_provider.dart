@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:submission_restaurant_app/data/api/api_service.dart';
 import 'package:submission_restaurant_app/data/model/post_review_body.dart';
-import 'package:submission_restaurant_app/data/model/restaurant_detail.dart';
-import 'package:submission_restaurant_app/data/model/restaurant_search.dart';
-import 'package:submission_restaurant_app/data/model/restaurants_list.dart';
-
-enum ResultState { loading, noData, hasData, error }
+import 'package:submission_restaurant_app/data/model/restaurant_detail_response.dart';
+import 'package:submission_restaurant_app/data/model/restaurant_search_response.dart';
+import 'package:submission_restaurant_app/data/model/restaurants_list_response.dart';
+import 'package:submission_restaurant_app/data/model/review_response.dart';
+import 'package:submission_restaurant_app/utils/result_state.dart';
 
 class ApiProvider extends ChangeNotifier {
   final ApiService apiService;
@@ -22,17 +22,22 @@ class ApiProvider extends ChangeNotifier {
 
   String get message => _message;
 
-  late RestaurantsList _restaurantsList;
+  late RestaurantsListResponse _restaurantsList;
 
-  RestaurantsList get restaurantListResult => _restaurantsList;
+  RestaurantsListResponse get restaurantListResult => _restaurantsList;
 
-  late RestaurantSearch _restaurantSearchResult;
+  late RestaurantSearchResponse _restaurantSearchResult;
 
-  RestaurantSearch get restaurantSearchResult => _restaurantSearchResult;
+  RestaurantSearchResponse get restaurantSearchResult =>
+      _restaurantSearchResult;
 
-  late RestaurantDetail _restaurantDetail;
+  late RestaurantDetailResponse _restaurantDetail;
 
-  RestaurantDetail get restaurantDetailResult => _restaurantDetail;
+  RestaurantDetailResponse get restaurantDetailResult => _restaurantDetail;
+
+  late ReviewResponse _reviewResponse;
+
+  ReviewResponse get reviewResponse => _reviewResponse;
 
   Future<dynamic> fetchListRestaurant() async {
     try {
@@ -92,6 +97,8 @@ class ApiProvider extends ChangeNotifier {
       if (result.restaurants.isEmpty) {
         _state = ResultState.noData;
         notifyListeners();
+        _restaurantSearchResult = result;
+
         return _message = 'Not Found';
       } else {
         _state = ResultState.hasData;
@@ -106,7 +113,7 @@ class ApiProvider extends ChangeNotifier {
     }
   }
 
-  Future<dynamic> postReviewResturant(PostReviewBody reviewBody) async {
+  Future<dynamic> postReviewRestaurant(PostReviewBody reviewBody) async {
     try {
       _state = ResultState.loading;
       notifyListeners();
@@ -116,10 +123,13 @@ class ApiProvider extends ChangeNotifier {
       if (result.error == true) {
         _state = ResultState.noData;
         notifyListeners();
+
         return _message = result.message;
       } else {
         _state = ResultState.hasData;
         notifyListeners();
+        _reviewResponse = result;
+
         return _restaurantDetail.restaurant.customerReviews =
             result.customerReviews;
       }
