@@ -4,6 +4,7 @@ import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -55,8 +56,9 @@ class MyApp extends StatelessWidget {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-                create: (context) => ApiProvider(apiService: ApiService())
-                  ..fetchListRestaurant()),
+                create: (context) =>
+                    ApiProvider(apiService: ApiService(Client()))
+                      ..fetchListRestaurant()),
             ChangeNotifierProvider(
                 create: (context) =>
                     DatabaseProvider(databaseHelper: DatabaseHelper())
